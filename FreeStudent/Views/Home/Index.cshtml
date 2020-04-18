@@ -1,2 +1,18 @@
 ﻿<h1>Home</h1>
-<a asp-controller="Account" asp-action="Register"> Регистрация </a>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>@User.Identity.Name</p>
+
+    <a asp-controller="Users" asp-action="Index"> Пользователи </a>
+    <a asp-controller="Roles" asp-action="Index"> Роли </a>
+
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <input type="submit" value="Выход" />
+    </form>
+}
+else
+{
+    <a asp-controller="Account" asp-action="Login">Вход</a>
+    <a asp-controller="Account" asp-action="Register">Регистрация</a>
+}

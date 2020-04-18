@@ -1,0 +1,14 @@
+﻿@model IEnumerable<User>
+
+<h2>Список пользователей</h2>
+<table>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                <a  asp-action="Edit" asp-route-userid="@user.Id">Права доступа</a>
+            </td>
+        </tr>
+    }
+</table>
