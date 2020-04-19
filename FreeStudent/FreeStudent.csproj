@@ -22,6 +22,7 @@
     <Folder Include="Data\Entities\" />
     <Folder Include="Data\Repositories\" />
     <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\mnt\" />
   </ItemGroup>
 
 </Project>
