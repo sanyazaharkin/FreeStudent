@@ -7,17 +7,13 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    @await Html.PartialAsync("HeaderPartial")
     <div>
-        <div>
-            <div>
-                <div>
-                    @RenderBody()
-                </div>
-                @await Html.PartialAsync("SidebarPartial")
-            </div>
-        </div>
+        @await Html.PartialAsync("HeaderPartial")
+    </div>>
+    <div class="container mt-5">
+        @RenderBody()
     </div>
+
     @await Html.PartialAsync("FooterPartial")
 
     @await Html.PartialAsync("ScriptsPartial")

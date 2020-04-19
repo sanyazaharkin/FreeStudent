@@ -1,3 +1,54 @@
-﻿<ul class="mainmenu">
-    <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
-</ul>
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="#">FreeStudent</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav text-center ml-auto">
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    @if (User.IsInRole("Administrators"))
+                    {
+                        @await Html.PartialAsync("NavAdmin")
+                        @await Html.PartialAsync("NavManager")
+                        @await Html.PartialAsync("NavExecutor")
+                        @await Html.PartialAsync("NavCustomer")
+                    }
+                    else if (User.IsInRole("Manager"))
+                    {
+                        @await Html.PartialAsync("NavManager")
+                        @await Html.PartialAsync("NavExecutor")
+                        @await Html.PartialAsync("NavCustomer")
+                    }
+                    else if (User.IsInRole("Executor"))
+                    {
+                        @await Html.PartialAsync("NavExecutor")
+                    }
+                    else if (User.IsInRole("Customer"))
+                    {
+                        @await Html.PartialAsync("NavCustomer")
+                    }
+
+
+                    <a class="nav-link nav-item active" href="#">@User.Identity.Name<span class="sr-only">(current)</span></a>
+
+
+
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login">Вход</a>
+                    <a asp-controller="Account" asp-action="Register">Регистрация</a>
+                }
+
+            }
+
+            <form class="form-inline mt-2 mt-md-0" method="post" asp-controller="Account" asp-action="Logout">
+                <input class="btn btn-outline-secondary my-2 my-sm-0" type="submit" value="Выход" />
+            </form>
+        </div>
+    </div>
+</nav>

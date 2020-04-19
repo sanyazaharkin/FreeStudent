@@ -17,9 +17,17 @@ namespace FreeStudent.Data
             {
                 await roleManager.CreateAsync(new IdentityRole("Administrators"));
             }
-            if (await roleManager.FindByNameAsync("employee") == null)
+            if (await roleManager.FindByNameAsync("Manager") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("employee"));
+                await roleManager.CreateAsync(new IdentityRole("Manager"));
+            }
+            if (await roleManager.FindByNameAsync("Executor") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("Executor"));
+            }
+            if (await roleManager.FindByNameAsync("Customer") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("Customer"));
             }
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
