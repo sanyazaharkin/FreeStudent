@@ -10,7 +10,8 @@ namespace FreeStudent.Data
 {
     public class AppDbContext:IdentityDbContext<User>
     {
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Tariff> Tariffs { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
           //  Database.EnsureCreated();

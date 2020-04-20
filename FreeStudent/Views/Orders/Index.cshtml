@@ -1,0 +1,20 @@
+﻿@model IQueryable<Order>
+@{
+    ViewBag.Title = "Список Заказов";
+}
+
+<a asp-action="Create">Добавить Заказ</a>
+
+<table>
+    <tr><th>Email</th><th>Год</th><th></th></tr>
+    @foreach (var order in Model)
+    {
+<tr>
+    <td>@order.Id</td>
+    <td>@order.Name</td>
+    <td>@order.Executor</td>
+    <td>@order.Customer</td>
+    <td>@order.Tariff</td>
+</tr>
+    }
+</table>

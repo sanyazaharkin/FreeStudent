@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace FreeStudent.Data.Models
 {
-    public class User:IdentityUser
+    public class User : IdentityUser
     {
-        public int Year { get; set; }
+        public string Name { get; set; }
+        public string SurName { get; set; }
+        public int Balance { get; set; } = 0;
+        public List<Order> Orders { get; set; }
     }
 }

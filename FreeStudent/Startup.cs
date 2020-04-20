@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FreeStudent.Data;
-
+using FreeStudent.Data.Entities;
 using FreeStudent.Data.Models;
+using FreeStudent.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,8 @@ namespace FreeStudent
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddTransient<IOrders,OrdersRepository>();
+            services.AddTransient<ITariffs,TariffsRepository>();
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
