@@ -28,7 +28,8 @@ namespace FreeStudent
                 {
                     var userManager = services.GetRequiredService<UserManager<User>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await RoleInitializer.InitializeAsync(userManager, rolesManager);
+                    var db_context = services.GetRequiredService<AppDbContext>();
+                    await RoleInitializer.InitializeAsync(userManager, rolesManager, db_context);
                 }
                 catch (Exception ex)
                 {

@@ -10,7 +10,8 @@ namespace FreeStudent.Data.Models
     {
         public string Name { get; set; }
         public string SurName { get; set; }
-        public int Balance { get; set; } = 0;
-        public List<Order> Orders { get; set; }
+        public int Balance { get; set; } = 0;        
+        public override string ToString() => Name + " " + SurName;
+
     }
 }

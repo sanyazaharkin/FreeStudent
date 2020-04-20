@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Tariff>
+
+<h2>Перечень тарифов</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Платит заказчик</th>
+        <th>Платит исполнитель</th>
+        <th>Скидка</th>
+    </tr>
+    @foreach (var tariff in Model)
+    {
+        <tr>
+            <td>@tariff.Id</td>
+            <td>@tariff.Name</td>
+            <td>@tariff.CustomerPays</td>
+            <td>@tariff.ExecutorPays</td>
+            <td>@tariff.Discount</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@tariff.Id">Изменить</a>
+                <a asp-action="Delete" asp-route-id="@tariff.Id">Удалить</a>
+            </td>
+        </tr>
+    }
+</table>
+<a asp-action="Edit">Добавить</a>

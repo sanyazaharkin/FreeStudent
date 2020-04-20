@@ -8,6 +8,11 @@ namespace FreeStudent.Data.Entities
 {
     public interface ITariffs
     {
-        public IQueryable<Tariff> AllTariffs(); 
+        public IEnumerable<Tariff> All();
+        public Tariff GetById(int id);
+        public Tariff GetByName(string name);
+        public Task Add(Tariff tariff);
+        public Task DeleteById(int id);
+
     }
 }

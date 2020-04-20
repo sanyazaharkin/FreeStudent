@@ -9,7 +9,7 @@ namespace FreeStudent.Data
 {
     public class RoleInitializer
     {
-        public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, AppDbContext _context)
         {
             string adminEmail = "admin@freestudent.ru";
             string password = "_Aa123456";
@@ -39,6 +39,12 @@ namespace FreeStudent.Data
                     await userManager.AddToRoleAsync(admin, "Administrators");
                 }
             }
+            if (!_context.Tariffs.Any())
+            {
+                _context.Tariffs.Add(new Tariff { Name = "Новый тариф"});
+                _context.SaveChanges();
+            }
+
         }
     }
 }

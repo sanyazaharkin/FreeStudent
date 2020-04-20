@@ -29,8 +29,7 @@ namespace FreeStudent
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IOrders,OrdersRepository>();
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));            
             services.AddTransient<ITariffs,TariffsRepository>();
 
             services.AddIdentity<User, IdentityRole>()
