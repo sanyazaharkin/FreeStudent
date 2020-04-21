@@ -39,11 +39,8 @@ namespace FreeStudent.Data
                     await userManager.AddToRoleAsync(admin, "Administrators");
                 }
             }
-            if (!_context.Tariffs.Any())
-            {
-                _context.Tariffs.Add(new Tariff { Name = "Новый тариф"});
-                _context.SaveChanges();
-            }
+
+
 
         }
     }

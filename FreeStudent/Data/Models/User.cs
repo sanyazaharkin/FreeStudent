@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FreeStudent.Data.Models.Relationships;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ namespace FreeStudent.Data.Models
         public string SurName { get; set; }
         public int Balance { get; set; } = 0;        
         public override string ToString() => Name + " " + SurName;
+
+        public List<OrderExecutorRelation> ExecutorRelations { get; set; }
+        public List<OrderCustomerRelation> CustomerRelations { get; set; }
 
     }
 }
