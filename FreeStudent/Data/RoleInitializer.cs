@@ -13,22 +13,19 @@ namespace FreeStudent.Data
         {
             string adminEmail = "admin@freestudent.ru";
             string password = "_Aa123456";
-            if (await roleManager.FindByNameAsync("Administrators") == null)
+            if (await roleManager.FindByNameAsync("Administrator") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("Administrators"));
+                await roleManager.CreateAsync(new IdentityRole("Administrator"));
             }
             if (await roleManager.FindByNameAsync("Manager") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("Manager"));
             }
-            if (await roleManager.FindByNameAsync("Executor") == null)
+            if (await roleManager.FindByNameAsync("User") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("Executor"));
+                await roleManager.CreateAsync(new IdentityRole("User"));
             }
-            if (await roleManager.FindByNameAsync("Customer") == null)
-            {
-                await roleManager.CreateAsync(new IdentityRole("Customer"));
-            }
+
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
                 User admin = new User { Email = adminEmail, UserName = adminEmail };
@@ -36,7 +33,7 @@ namespace FreeStudent.Data
                 admin.EmailConfirmed = true;
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "Administrators");
+                    await userManager.AddToRoleAsync(admin, "Administrator");
                 }
             }
 
