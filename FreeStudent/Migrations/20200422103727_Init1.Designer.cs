@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreeStudent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200421102656_NewOrder")]
-    partial class NewOrder
+    [Migration("20200422103727_Init1")]
+    partial class Init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,59 +25,25 @@ namespace FreeStudent.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<Guid>("ExecutorId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Topic")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ExecutorId");
+
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("FreeStudent.Data.Models.Relationships.OrderCustomerRelation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OrderCustomerRelations");
-                });
-
-            modelBuilder.Entity("FreeStudent.Data.Models.Relationships.OrderExecutorRelation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OrderExecutorRelations");
                 });
 
             modelBuilder.Entity("FreeStudent.Data.Models.User", b =>
@@ -151,6 +117,23 @@ namespace FreeStudent.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.UserProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserProfile");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -281,30 +264,26 @@ namespace FreeStudent.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.Relationships.OrderCustomerRelation", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.Order", b =>
                 {
-                    b.HasOne("FreeStudent.Data.Models.Order", "Order")
-                        .WithOne("OrderCustomer")
-                        .HasForeignKey("FreeStudent.Data.Models.Relationships.OrderCustomerRelation", "OrderId")
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "Customer")
+                        .WithMany("CustomerOnOrders")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FreeStudent.Data.Models.User", "User")
-                        .WithMany("CustomerRelations")
-                        .HasForeignKey("UserId");
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "Executor")
+                        .WithMany("ExecutorOnOrders")
+                        .HasForeignKey("ExecutorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.Relationships.OrderExecutorRelation", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.UserProfile", b =>
                 {
-                    b.HasOne("FreeStudent.Data.Models.Order", "Order")
-                        .WithOne("OrderExecutor")
-                        .HasForeignKey("FreeStudent.Data.Models.Relationships.OrderExecutorRelation", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FreeStudent.Data.Models.User", "User")
-                        .WithMany("ExecutorRelations")
-                        .HasForeignKey("UserId");
+                        .WithOne("Profile")
+                        .HasForeignKey("FreeStudent.Data.Models.UserProfile", "UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

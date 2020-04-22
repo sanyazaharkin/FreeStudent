@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FreeStudent.Data.Models
 {
-    public class User : IdentityUser
+    public class ForumTopic : TableBase
     {
-        public UserProfile Profile { get; set; }
-
-
+        public Forum Forum { get; set; }
         
-
     }
 }

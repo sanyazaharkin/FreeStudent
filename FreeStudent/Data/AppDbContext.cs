@@ -5,21 +5,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FreeStudent.Data.Models.Relationships;
 
 namespace FreeStudent.Data
 {
     public class AppDbContext:IdentityDbContext<User>
     {
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderCustomerRelation> OrderCustomerRelations { get; set; }
-        public DbSet<OrderExecutorRelation> OrderExecutorRelations { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<OrderCustomerRelation>().HasNoKey();
-        //    modelBuilder.Entity<OrderExecutorRelation>().HasNoKey();
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserProfile>().HasOne(c => c.User).WithOne(c => c.Profile);
+            modelBuilder.Entity<Order>().HasOne(order => order.Executor).WithMany(profile => profile.ExecutorOnOrders).HasForeignKey(order => order.ExecutorId).HasPrincipalKey(profile => profile.Id);
+            modelBuilder.Entity<Order>().HasOne(order => order.Customer).WithMany(profile => profile.CustomerOnOrders).HasForeignKey(order => order.CustomerId).HasPrincipalKey(profile => profile.Id);
+
+            base.OnModelCreating(modelBuilder);
+        }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
           //  Database.EnsureCreated();

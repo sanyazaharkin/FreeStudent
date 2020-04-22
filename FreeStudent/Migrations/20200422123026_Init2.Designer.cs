@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreeStudent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200421095434_DelTariffs")]
-    partial class DelTariffs
+    [Migration("20200422123026_Init2")]
+    partial class Init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,15 +19,114 @@ namespace FreeStudent.Migrations
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("FreeStudent.Data.Models.Chat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("UserProfileId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("Chat");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.Forum", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("UserProfileId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("Forum");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<Guid>("ExecutorId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Topic")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ExecutorId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.OrdersHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("UserProfileId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("OrdersHistory");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.RatingAndReviewsHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("UserProfileId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("RatingAndReviewsHistory");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.Specialization", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Specialization");
+                });
+
             modelBuilder.Entity("FreeStudent.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Balance")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -46,9 +145,6 @@ namespace FreeStudent.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
@@ -70,9 +166,6 @@ namespace FreeStudent.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("SurName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -90,6 +183,49 @@ namespace FreeStudent.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.UserProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("Anonymous")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<byte[]>("Avatar")
+                        .HasColumnType("longblob");
+
+                    b.Property<int>("Balance")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastTimeOnline")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<Guid?>("SpecializationId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("SurName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTimeOffset>("TimeZone")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpecializationId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserProfile");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -218,6 +354,60 @@ namespace FreeStudent.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.Chat", b =>
+                {
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
+                        .WithMany("Chats")
+                        .HasForeignKey("UserProfileId");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.Forum", b =>
+                {
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
+                        .WithMany("Forums")
+                        .HasForeignKey("UserProfileId");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.Order", b =>
+                {
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "Customer")
+                        .WithMany("CustomerOnOrders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "Executor")
+                        .WithMany("ExecutorOnOrders")
+                        .HasForeignKey("ExecutorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.OrdersHistory", b =>
+                {
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
+                        .WithMany("OrdersHistories")
+                        .HasForeignKey("UserProfileId");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.RatingAndReviewsHistory", b =>
+                {
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
+                        .WithMany("RatingAndReviews")
+                        .HasForeignKey("UserProfileId");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.UserProfile", b =>
+                {
+                    b.HasOne("FreeStudent.Data.Models.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationId");
+
+                    b.HasOne("FreeStudent.Data.Models.User", "User")
+                        .WithOne("Profile")
+                        .HasForeignKey("FreeStudent.Data.Models.UserProfile", "UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
