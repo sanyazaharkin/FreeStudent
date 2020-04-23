@@ -3,14 +3,16 @@ using System;
 using FreeStudent.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FreeStudent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200423044144_Init3")]
+    partial class Init3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,33 +51,20 @@ namespace FreeStudent.Migrations
                     b.ToTable("Forum");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.ForumMessage", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.ForumTopic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("ForimId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid?>("ForumId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("PrevForumTopicId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UserProfileId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ForumId");
 
-                    b.HasIndex("PrevForumTopicId");
-
-                    b.HasIndex("UserProfileId");
-
-                    b.ToTable("ForumMessage");
+                    b.ToTable("ForumTopic");
                 });
 
             modelBuilder.Entity("FreeStudent.Data.Models.ForumsUserProfilesRelationship", b =>
@@ -108,9 +97,6 @@ namespace FreeStudent.Migrations
                     b.Property<Guid>("ExecutorId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("SpecializationId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("Topic")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -119,8 +105,6 @@ namespace FreeStudent.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("ExecutorId");
-
-                    b.HasIndex("SpecializationId");
 
                     b.ToTable("Orders");
                 });
@@ -176,35 +160,6 @@ namespace FreeStudent.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Specialization");
-                });
-
-            modelBuilder.Entity("FreeStudent.Data.Models.Tariff", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("CustomerCommissionPercentage")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("PerformerCommissionPercentage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubscriptionFee")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tariffs");
                 });
 
             modelBuilder.Entity("FreeStudent.Data.Models.User", b =>
@@ -298,9 +253,6 @@ namespace FreeStudent.Migrations
                     b.Property<string>("SurName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("TariffId")
-                        .HasColumnType("char(36)");
-
                     b.Property<DateTimeOffset>("TimeZone")
                         .HasColumnType("datetime(6)");
 
@@ -310,8 +262,6 @@ namespace FreeStudent.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SpecializationId");
-
-                    b.HasIndex("TariffId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -461,23 +411,11 @@ namespace FreeStudent.Migrations
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.ForumMessage", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.ForumTopic", b =>
                 {
                     b.HasOne("FreeStudent.Data.Models.Forum", "Forum")
-                        .WithMany("Messages")
+                        .WithMany("Topics")
                         .HasForeignKey("ForumId");
-
-                    b.HasOne("FreeStudent.Data.Models.ForumMessage", "PrevForumTopic")
-                        .WithMany("ForumMessages")
-                        .HasForeignKey("PrevForumTopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FreeStudent.Data.Models.UserProfile", "UserProfile")
-                        .WithMany("ForumTopics")
-                        .HasForeignKey("UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("FreeStudent.Data.Models.ForumsUserProfilesRelationship", b =>
@@ -506,12 +444,6 @@ namespace FreeStudent.Migrations
                     b.HasOne("FreeStudent.Data.Models.UserProfile", "Executor")
                         .WithMany("ExecutorOnOrders")
                         .HasForeignKey("ExecutorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FreeStudent.Data.Models.Specialization", "Specialization")
-                        .WithMany("Orders")
-                        .HasForeignKey("SpecializationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -543,10 +475,6 @@ namespace FreeStudent.Migrations
                     b.HasOne("FreeStudent.Data.Models.Specialization", "Specialization")
                         .WithMany("UserProfiles")
                         .HasForeignKey("SpecializationId");
-
-                    b.HasOne("FreeStudent.Data.Models.Tariff", null)
-                        .WithMany("UserProfiles")
-                        .HasForeignKey("TariffId");
 
                     b.HasOne("FreeStudent.Data.Models.User", "User")
                         .WithOne("Profile")

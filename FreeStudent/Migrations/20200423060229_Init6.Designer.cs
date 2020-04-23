@@ -3,14 +3,16 @@ using System;
 using FreeStudent.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FreeStudent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200423060229_Init6")]
+    partial class Init6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,13 +51,10 @@ namespace FreeStudent.Migrations
                     b.ToTable("Forum");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.ForumMessage", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.ForumTopic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("ForimId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("ForumId")
@@ -75,7 +74,7 @@ namespace FreeStudent.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("ForumMessage");
+                    b.ToTable("ForumTopic");
                 });
 
             modelBuilder.Entity("FreeStudent.Data.Models.ForumsUserProfilesRelationship", b =>
@@ -184,23 +183,8 @@ namespace FreeStudent.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("CustomerCommissionPercentage")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("PerformerCommissionPercentage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubscriptionFee")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -461,14 +445,14 @@ namespace FreeStudent.Migrations
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.ForumMessage", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.ForumTopic", b =>
                 {
                     b.HasOne("FreeStudent.Data.Models.Forum", "Forum")
-                        .WithMany("Messages")
+                        .WithMany("Topics")
                         .HasForeignKey("ForumId");
 
-                    b.HasOne("FreeStudent.Data.Models.ForumMessage", "PrevForumTopic")
-                        .WithMany("ForumMessages")
+                    b.HasOne("FreeStudent.Data.Models.ForumTopic", "PrevForumTopic")
+                        .WithMany()
                         .HasForeignKey("PrevForumTopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

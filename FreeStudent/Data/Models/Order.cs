@@ -20,5 +20,9 @@ namespace FreeStudent.Data.Models
         public Guid CustomerId { get; set; } 
         public UserProfile Customer { get; set; }
         public UserProfile Executor { get; set; }
+        public Guid SpecializationId { get; set; } 
+        public Specialization Specialization { get; set; } 
+           
+
     }
 }

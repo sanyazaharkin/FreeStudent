@@ -8,5 +8,7 @@ namespace FreeStudent.Data.Models
     public class Specialization : TableBase
     {
         public List<UserProfile> UserProfiles { get; set; }
+        public List<Order> Orders { get; set; }
+
     }
 }

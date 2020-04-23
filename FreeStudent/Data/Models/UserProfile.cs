@@ -24,10 +24,11 @@ namespace FreeStudent.Data.Models
         public DateTime LastTimeOnline { get; set; }      
         
         public Specialization Specialization { get; set; }
-        public List<Forum> Forums { get; set; }
+        public List<ForumsUserProfilesRelationship> Forums { get; set; }
         public List<Chat> Chats { get; set; }
         public List<OrdersHistory> OrdersHistories { get; set; }
         public List<RatingAndReviewsHistory> RatingAndReviews { get; set; }
+        public List<ForumMessage> ForumTopics { get; set; }
 
         public int Balance { get; set; } = 0;
         public override string ToString() => Name + " " + SurName;

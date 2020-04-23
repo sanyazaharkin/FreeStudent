@@ -7,8 +7,10 @@ namespace FreeStudent.Data.Models
 {
     public class Forum : TableBase
     {
+
         public Order Order { get; set; }
-        public List<UserProfile> UserProfiles { get; set; }
-        public List<ForumTopic> Topics { get; set; }
+        public List<ForumsUserProfilesRelationship> Users  { get; set; }
+        public List<ForumMessage> Messages { get; set; }
+        
     }
 }
