@@ -157,7 +157,7 @@ namespace FreeStudent.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserProfile",
+                name: "UserProfiles",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -190,13 +190,13 @@ namespace FreeStudent.Migrations
                     table.ForeignKey(
                         name: "FK_Orders_UserProfile_ExecutorId",
                         column: x => x.ExecutorId,
-                        principalTable: "UserProfile",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_UserProfile_Id",
                         column: x => x.Id,
-                        principalTable: "UserProfile",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -245,7 +245,7 @@ namespace FreeStudent.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfile_UserId",
-                table: "UserProfile",
+                table: "UserProfiles",
                 column: "UserId",
                 unique: true);
         }
@@ -274,7 +274,7 @@ namespace FreeStudent.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "UserProfile");
+                name: "UserProfiles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

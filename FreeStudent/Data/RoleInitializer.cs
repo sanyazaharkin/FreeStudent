@@ -39,6 +39,13 @@ namespace FreeStudent.Data
                     await userManager.AddToRoleAsync(admin, "Administrators");
                 }
             }
+            if (_context.UserProfiles.FirstOrDefault(c=>c.User == userManager.Users.FirstOrDefault(c=>c.UserName == adminEmail)) == null)
+            {
+                User user = userManager.Users.FirstOrDefault(c => c.UserName == adminEmail);
+                UserProfile profile = new UserProfile();
+                profile.User = user;
+                _context.UserProfiles.Add(profile) ;
+            }
 
 
 

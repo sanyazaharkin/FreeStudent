@@ -11,10 +11,11 @@ namespace FreeStudent.Data
     public class AppDbContext:IdentityDbContext<User>
     {
         public DbSet<Order> Orders { get; set; }
-        public DbSet<UserProfile> UserProfile { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Forum> Forum { get; set; }
         public DbSet<ForumsUserProfilesRelationship> ForumsUserProfilesRelationships { get; set; }
         public DbSet<Tariff> Tariffs { get; set; }
+        public DbSet<File> Files { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

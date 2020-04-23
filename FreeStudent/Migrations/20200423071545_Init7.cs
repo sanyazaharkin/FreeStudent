@@ -67,7 +67,7 @@ namespace FreeStudent.Migrations
                     table.ForeignKey(
                         name: "FK_ForumMessage_UserProfile_UserProfileId",
                         column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -140,7 +140,7 @@ namespace FreeStudent.Migrations
                     table.ForeignKey(
                         name: "FK_ForumTopic_UserProfile_UserProfileId",
                         column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });

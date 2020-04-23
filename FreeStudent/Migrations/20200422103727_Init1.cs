@@ -18,7 +18,7 @@ namespace FreeStudent.Migrations
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "Id",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int")
@@ -55,7 +55,7 @@ namespace FreeStudent.Migrations
                 name: "FK_Orders_UserProfile_CustomerId",
                 table: "Orders",
                 column: "CustomerId",
-                principalTable: "UserProfile",
+                principalTable: "UserProfiles",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
@@ -63,7 +63,7 @@ namespace FreeStudent.Migrations
                 name: "FK_Orders_UserProfile_ExecutorId",
                 table: "Orders",
                 column: "ExecutorId",
-                principalTable: "UserProfile",
+                principalTable: "UserProfiles",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -88,7 +88,7 @@ namespace FreeStudent.Migrations
 
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
-                table: "UserProfile",
+                table: "UserProfiles",
                 type: "int",
                 nullable: false,
                 oldClrType: typeof(Guid))
@@ -113,7 +113,7 @@ namespace FreeStudent.Migrations
                 name: "FK_Orders_UserProfile_ExecutorId",
                 table: "Orders",
                 column: "ExecutorId",
-                principalTable: "UserProfile",
+                principalTable: "UserProfiles",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
@@ -121,7 +121,7 @@ namespace FreeStudent.Migrations
                 name: "FK_Orders_UserProfile_Id",
                 table: "Orders",
                 column: "Id",
-                principalTable: "UserProfile",
+                principalTable: "UserProfiles",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

@@ -226,7 +226,7 @@ namespace FreeStudent.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.UserProfile", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.UserProfiles", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -266,7 +266,7 @@ namespace FreeStudent.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserProfile");
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -399,7 +399,7 @@ namespace FreeStudent.Migrations
 
             modelBuilder.Entity("FreeStudent.Data.Models.Chat", b =>
                 {
-                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
+                    b.HasOne("FreeStudent.Data.Models.UserProfiles", null)
                         .WithMany("Chats")
                         .HasForeignKey("UserProfileId");
                 });
@@ -426,7 +426,7 @@ namespace FreeStudent.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfile", "UserProfile")
+                    b.HasOne("FreeStudent.Data.Models.UserProfiles", "UserProfiles")
                         .WithMany("Forums")
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -435,13 +435,13 @@ namespace FreeStudent.Migrations
 
             modelBuilder.Entity("FreeStudent.Data.Models.Order", b =>
                 {
-                    b.HasOne("FreeStudent.Data.Models.UserProfile", "Customer")
+                    b.HasOne("FreeStudent.Data.Models.UserProfiles", "Customer")
                         .WithMany("CustomerOnOrders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfile", "Executor")
+                    b.HasOne("FreeStudent.Data.Models.UserProfiles", "Executor")
                         .WithMany("ExecutorOnOrders")
                         .HasForeignKey("ExecutorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -454,7 +454,7 @@ namespace FreeStudent.Migrations
                         .WithMany()
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
+                    b.HasOne("FreeStudent.Data.Models.UserProfiles", null)
                         .WithMany("OrdersHistories")
                         .HasForeignKey("UserProfileId");
                 });
@@ -465,12 +465,12 @@ namespace FreeStudent.Migrations
                         .WithMany()
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
+                    b.HasOne("FreeStudent.Data.Models.UserProfiles", null)
                         .WithMany("RatingAndReviews")
                         .HasForeignKey("UserProfileId");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.UserProfile", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.UserProfiles", b =>
                 {
                     b.HasOne("FreeStudent.Data.Models.Specialization", "Specialization")
                         .WithMany("UserProfiles")
@@ -478,7 +478,7 @@ namespace FreeStudent.Migrations
 
                     b.HasOne("FreeStudent.Data.Models.User", "User")
                         .WithOne("Profile")
-                        .HasForeignKey("FreeStudent.Data.Models.UserProfile", "UserId");
+                        .HasForeignKey("FreeStudent.Data.Models.UserProfiles", "UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

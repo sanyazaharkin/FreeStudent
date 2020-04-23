@@ -25,7 +25,8 @@ namespace FreeStudent.Data.Models
         public ForumMessage PrevForumTopic { get; set; }
 
         public List<ForumMessage> ForumMessages { get; set; }
+        public List<File> Files { get; set; }
 
-        
+
     }
 }

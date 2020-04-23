@@ -9,7 +9,7 @@ namespace FreeStudent.Migrations
         {
             migrationBuilder.AddColumn<Guid>(
                 name: "TariffId",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: true);
 
             migrationBuilder.CreateTable(
@@ -26,12 +26,12 @@ namespace FreeStudent.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfile_TariffId",
-                table: "UserProfile",
+                table: "UserProfiles",
                 column: "TariffId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_UserProfile_Tariffs_TariffId",
-                table: "UserProfile",
+                table: "UserProfiles",
                 column: "TariffId",
                 principalTable: "Tariffs",
                 principalColumn: "Id",
@@ -42,18 +42,18 @@ namespace FreeStudent.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_UserProfile_Tariffs_TariffId",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropTable(
                 name: "Tariffs");
 
             migrationBuilder.DropIndex(
                 name: "IX_UserProfile_TariffId",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "TariffId",
-                table: "UserProfile");
+                table: "UserProfiles");
         }
     }
 }

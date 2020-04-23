@@ -21,45 +21,45 @@ namespace FreeStudent.Migrations
 
             migrationBuilder.AddColumn<bool>(
                 name: "Anonymous",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddColumn<byte[]>(
                 name: "Avatar",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "Balance",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "LastTimeOnline",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<string>(
                 name: "Name",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: true);
 
             migrationBuilder.AddColumn<Guid>(
                 name: "SpecializationId",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "SurName",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTimeOffset>(
                 name: "TimeZone",
-                table: "UserProfile",
+                table: "UserProfiles",
                 nullable: false,
                 defaultValue: new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
 
@@ -76,7 +76,7 @@ namespace FreeStudent.Migrations
                     table.ForeignKey(
                         name: "FK_Chat_UserProfile_UserProfileId",
                         column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -94,7 +94,7 @@ namespace FreeStudent.Migrations
                     table.ForeignKey(
                         name: "FK_Forum_UserProfile_UserProfileId",
                         column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -112,7 +112,7 @@ namespace FreeStudent.Migrations
                     table.ForeignKey(
                         name: "FK_OrdersHistory_UserProfile_UserProfileId",
                         column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -130,7 +130,7 @@ namespace FreeStudent.Migrations
                     table.ForeignKey(
                         name: "FK_RatingAndReviewsHistory_UserProfile_UserProfileId",
                         column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -148,7 +148,7 @@ namespace FreeStudent.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfile_SpecializationId",
-                table: "UserProfile",
+                table: "UserProfiles",
                 column: "SpecializationId");
 
             migrationBuilder.CreateIndex(
@@ -173,7 +173,7 @@ namespace FreeStudent.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_UserProfile_Specialization_SpecializationId",
-                table: "UserProfile",
+                table: "UserProfiles",
                 column: "SpecializationId",
                 principalTable: "Specialization",
                 principalColumn: "Id",
@@ -184,7 +184,7 @@ namespace FreeStudent.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_UserProfile_Specialization_SpecializationId",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropTable(
                 name: "Chat");
@@ -203,39 +203,39 @@ namespace FreeStudent.Migrations
 
             migrationBuilder.DropIndex(
                 name: "IX_UserProfile_SpecializationId",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "Anonymous",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "Avatar",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "Balance",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "LastTimeOnline",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "Name",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "SpecializationId",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "SurName",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.DropColumn(
                 name: "TimeZone",
-                table: "UserProfile");
+                table: "UserProfiles");
 
             migrationBuilder.AddColumn<int>(
                 name: "Balance",

@@ -22,7 +22,7 @@ namespace FreeStudent.Migrations
                 name: "FK_ForumTopic_UserProfile_UserProfileId",
                 table: "ForumTopic",
                 column: "UserProfileId",
-                principalTable: "UserProfile",
+                principalTable: "UserProfiles",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

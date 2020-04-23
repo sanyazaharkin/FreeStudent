@@ -29,6 +29,7 @@ namespace FreeStudent.Data.Models
         public List<OrdersHistory> OrdersHistories { get; set; }
         public List<RatingAndReviewsHistory> RatingAndReviews { get; set; }
         public List<ForumMessage> ForumTopics { get; set; }
+        public List<File> Files { get; set; }
 
         public int Balance { get; set; } = 0;
         public override string ToString() => Name + " " + SurName;

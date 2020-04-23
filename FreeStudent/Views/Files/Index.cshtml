@@ -1,0 +1,21 @@
+﻿@model IEnumerable<File>
+
+<h2>Список Файлов</h2>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Имя</th>
+        <th>Загрузил</th>
+    </tr>
+    @foreach (var file in Model)
+    {
+    
+        <tr>
+            <td>@file.Id</td>
+            <td>@file.Name</td>
+            <td>@file.UserProfile.Name</td>
+        </tr>
+    }
+</table>
+
+<a asp-action="AddNewFile">Добавить файл</a>
