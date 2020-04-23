@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreeStudent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200423045815_Init5")]
-    partial class Init5
+    [Migration("20200423124133_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,41 @@ namespace FreeStudent.Migrations
                     b.ToTable("Chat");
                 });
 
+            modelBuilder.Entity("FreeStudent.Data.Models.File", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("FileType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ForumId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("ForumMessageId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<Guid>("UserProfileId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<byte[]>("bytes")
+                        .HasColumnType("longblob");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ForumId");
+
+                    b.HasIndex("ForumMessageId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("FreeStudent.Data.Models.Forum", b =>
                 {
                     b.Property<Guid>("Id")
@@ -51,10 +86,13 @@ namespace FreeStudent.Migrations
                     b.ToTable("Forum");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.ForumTopic", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.ForumMessage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ForimId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("ForumId")
@@ -74,7 +112,7 @@ namespace FreeStudent.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("ForumTopic");
+                    b.ToTable("ForumMessage");
                 });
 
             modelBuilder.Entity("FreeStudent.Data.Models.ForumsUserProfilesRelationship", b =>
@@ -177,6 +215,35 @@ namespace FreeStudent.Migrations
                     b.ToTable("Specialization");
                 });
 
+            modelBuilder.Entity("FreeStudent.Data.Models.Tariff", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("CustomerCommissionPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("PerformerCommissionPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubscriptionFee")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tariffs");
+                });
+
             modelBuilder.Entity("FreeStudent.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -241,7 +308,7 @@ namespace FreeStudent.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.UserProfiles", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.UserProfile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -268,6 +335,9 @@ namespace FreeStudent.Migrations
                     b.Property<string>("SurName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<Guid?>("TariffId")
+                        .HasColumnType("char(36)");
+
                     b.Property<DateTimeOffset>("TimeZone")
                         .HasColumnType("datetime(6)");
 
@@ -277,6 +347,8 @@ namespace FreeStudent.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SpecializationId");
+
+                    b.HasIndex("TariffId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -414,9 +486,26 @@ namespace FreeStudent.Migrations
 
             modelBuilder.Entity("FreeStudent.Data.Models.Chat", b =>
                 {
-                    b.HasOne("FreeStudent.Data.Models.UserProfiles", null)
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
                         .WithMany("Chats")
                         .HasForeignKey("UserProfileId");
+                });
+
+            modelBuilder.Entity("FreeStudent.Data.Models.File", b =>
+                {
+                    b.HasOne("FreeStudent.Data.Models.Forum", null)
+                        .WithMany("Files")
+                        .HasForeignKey("ForumId");
+
+                    b.HasOne("FreeStudent.Data.Models.ForumMessage", null)
+                        .WithMany("Files")
+                        .HasForeignKey("ForumMessageId");
+
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "UserProfile")
+                        .WithMany("Files")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FreeStudent.Data.Models.Forum", b =>
@@ -426,19 +515,19 @@ namespace FreeStudent.Migrations
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.ForumTopic", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.ForumMessage", b =>
                 {
                     b.HasOne("FreeStudent.Data.Models.Forum", "Forum")
-                        .WithMany("Topics")
+                        .WithMany("Messages")
                         .HasForeignKey("ForumId");
 
-                    b.HasOne("FreeStudent.Data.Models.ForumTopic", "PrevForumTopic")
-                        .WithMany()
+                    b.HasOne("FreeStudent.Data.Models.ForumMessage", "PrevForumTopic")
+                        .WithMany("ForumMessages")
                         .HasForeignKey("PrevForumTopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfiles", "UserProfiles")
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "UserProfile")
                         .WithMany("ForumTopics")
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -453,7 +542,7 @@ namespace FreeStudent.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfiles", "UserProfiles")
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "UserProfile")
                         .WithMany("Forums")
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -462,13 +551,13 @@ namespace FreeStudent.Migrations
 
             modelBuilder.Entity("FreeStudent.Data.Models.Order", b =>
                 {
-                    b.HasOne("FreeStudent.Data.Models.UserProfiles", "Customer")
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "Customer")
                         .WithMany("CustomerOnOrders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfiles", "Executor")
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", "Executor")
                         .WithMany("ExecutorOnOrders")
                         .HasForeignKey("ExecutorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -487,7 +576,7 @@ namespace FreeStudent.Migrations
                         .WithMany()
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfiles", null)
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
                         .WithMany("OrdersHistories")
                         .HasForeignKey("UserProfileId");
                 });
@@ -498,20 +587,24 @@ namespace FreeStudent.Migrations
                         .WithMany()
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("FreeStudent.Data.Models.UserProfiles", null)
+                    b.HasOne("FreeStudent.Data.Models.UserProfile", null)
                         .WithMany("RatingAndReviews")
                         .HasForeignKey("UserProfileId");
                 });
 
-            modelBuilder.Entity("FreeStudent.Data.Models.UserProfiles", b =>
+            modelBuilder.Entity("FreeStudent.Data.Models.UserProfile", b =>
                 {
                     b.HasOne("FreeStudent.Data.Models.Specialization", "Specialization")
                         .WithMany("UserProfiles")
                         .HasForeignKey("SpecializationId");
 
+                    b.HasOne("FreeStudent.Data.Models.Tariff", null)
+                        .WithMany("UserProfiles")
+                        .HasForeignKey("TariffId");
+
                     b.HasOne("FreeStudent.Data.Models.User", "User")
                         .WithOne("Profile")
-                        .HasForeignKey("FreeStudent.Data.Models.UserProfiles", "UserId");
+                        .HasForeignKey("FreeStudent.Data.Models.UserProfile", "UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
