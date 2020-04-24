@@ -26,9 +26,9 @@ namespace FreeStudent.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.Profiles = _userProfiles;
-            ViewBag.Users = _userManager.Users;
-            return View(_files.GetAllFiles());
+            FilesViewModel viewModel = new FilesViewModel { Files = _files.GetAllFiles(), UserProfiles = _userProfiles.AllUserProfiles.ToList() };
+
+            return View(viewModel);
         }
 
         [HttpGet]

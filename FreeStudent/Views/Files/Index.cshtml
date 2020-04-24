@@ -1,4 +1,4 @@
-﻿@model IEnumerable<File>
+﻿@model FilesViewModel
 
     <div class="row">
         <h2>Список Файлов</h2>
@@ -20,7 +20,7 @@
         </tr>
     </thead>    
     <tbody>
-        @foreach (var file in Model)
+        @foreach (var file in Model.Files)
         {
 
             <tr>
@@ -29,7 +29,7 @@
                 <td>@file.Format</td>
                 <td>@file.ContentType</td>
                 <td>@file.MarkedForDeletion</td>
-                <td>ViewBag.Profiles.GetUserProfileById(file.UserProfileId)</td>
+                <td>@Model.UserProfiles.FirstOrDefault(c=>c.Id == file.UserProfileId)</td>
                 <td>@file.DateOfDownload.ToLocalTime()</td>
                 <td>@file.DateOfMarkForDelete.ToLocalTime()</td>
                 <td><a class="btn btn-info" asp-controller="Files" asp-action="GetFiles" asp-route-id="@file.Id">Загрузить</a></td>

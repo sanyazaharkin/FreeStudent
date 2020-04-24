@@ -1,5 +1,6 @@
 ﻿using FreeStudent.Data.Interfaces;
 using FreeStudent.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,9 @@ namespace FreeStudent.Data.Repositories
         {
             _context = context;
         }
-
+        public IEnumerable<UserProfile> AllUserProfiles { get { return _context.UserProfiles; } }
         public UserProfile GetUserProfileByUserId(string UserId) => _context.UserProfiles.FirstOrDefault(c => c.UserId == UserId);
+        public UserProfile GetUserProfileById(string id) => _context.UserProfiles.FirstOrDefault(c => c.Id.ToString() == id);
         public string GetUserProfileIdByUserId(string UserId) => _context.UserProfiles.FirstOrDefault(c => c.UserId == UserId).Id.ToString();
 
         public void Add(UserProfile profile)
@@ -24,6 +26,6 @@ namespace FreeStudent.Data.Repositories
             _context.SaveChanges();
         }
 
-        public UserProfile GetUserProfileById(Guid id) => _context.UserProfiles.FirstOrDefault(c=>c.Id == id);
+        
     }
 }

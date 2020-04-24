@@ -8,6 +8,7 @@ namespace FreeStudent.Data.Interfaces
 {
     public interface IFiles
     {
+        
         public void Add(File file);
         public File GetFileById(string Id);
         public IEnumerable<File> GetFilesBuAuthor(string ProfileID);

@@ -8,7 +8,8 @@ namespace FreeStudent.Data.Interfaces
 {
     public interface IUserProfiles
     {
-        public UserProfile GetUserProfileById(Guid id);
+        public IEnumerable<UserProfile> AllUserProfiles { get; }
+        public UserProfile GetUserProfileById(string id);
         public UserProfile GetUserProfileByUserId(string UserId);
         public string GetUserProfileIdByUserId(string UserId);
         public void Add(UserProfile profile);
