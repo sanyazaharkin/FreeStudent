@@ -3,7 +3,7 @@
     <form asp-action="AddNewFile" asp-controller="Files" method="post" enctype="multipart/form-data">
         <p>
             <label>Файл</label>
-            <input name="File" type="file" class="form-control" />
+            <input type="file" asp-for="Files" multiple />
         </p>
         <p>
             <input type="submit" value="Добавить" />

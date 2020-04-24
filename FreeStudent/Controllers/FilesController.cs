@@ -44,17 +44,18 @@ namespace FreeStudent.Controllers
 
             if (ModelState.IsValid)
             {
-               
-                // считываем переданный файл в массив байтов
-                using (var binaryReader = new System.IO.BinaryReader(model.File.OpenReadStream()))
+                foreach (var formFile in model.Files)
                 {
-                    _files.Add(new File(
-                        Guid.Parse(_userProfiles.GetUserProfileIdByUserId(_userManager.GetUserId(this.User))),
-                        binaryReader.ReadBytes((int)model.File.Length),
-                        System.IO.Path.GetFileName(model.File.FileName),
-                        System.IO.Path.GetExtension(model.File.FileName),
-                        model.File.ContentType
-                        ));                        
+                    // считываем переданный файл в массив байтов
+                    using (var binaryReader = new System.IO.BinaryReader(formFile.OpenReadStream()))
+                    {
+                        _files.Add(new File(
+                            Guid.Parse(_userProfiles.GetUserProfileIdByUserId(_userManager.GetUserId(this.User))),
+                            binaryReader.ReadBytes((int)formFile.Length),
+                            System.IO.Path.GetFileName(formFile.FileName),
+                            System.IO.Path.GetExtension(formFile.FileName),
+                            formFile.ContentType));
+                    }
                 }
                     
                 

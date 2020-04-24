@@ -14,6 +14,6 @@ namespace FreeStudent.ViewModels
 
         [Display(Name = "Выберите файл")]
         [DataType(DataType.Upload)]
-        public IFormFile File { get; set; }
+        public List<IFormFile> Files { get; set; }
     }
 }
