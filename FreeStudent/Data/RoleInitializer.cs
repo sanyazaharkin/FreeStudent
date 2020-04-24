@@ -43,8 +43,11 @@ namespace FreeStudent.Data
             {
                 User user = userManager.Users.FirstOrDefault(c => c.UserName == adminEmail);
                 UserProfile profile = new UserProfile();
-                profile.User = user;
+                profile.UserId = user.Id.ToString() ;
+                profile.Name = "Александр";
+                profile.SurName = "Захаркин";
                 _context.UserProfiles.Add(profile) ;
+                _context.SaveChanges();
             }
 
 

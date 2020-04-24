@@ -16,11 +16,14 @@ namespace FreeStudent.Data.Repositories
         }
 
         public UserProfile GetUserProfileByUserId(string UserId) => _context.UserProfiles.FirstOrDefault(c => c.UserId == UserId);
+        public string GetUserProfileIdByUserId(string UserId) => _context.UserProfiles.FirstOrDefault(c => c.UserId == UserId).Id.ToString();
 
         public void Add(UserProfile profile)
         {
             _context.UserProfiles.Add(profile);
             _context.SaveChanges();
         }
+
+        public UserProfile GetUserProfileById(Guid id) => _context.UserProfiles.FirstOrDefault(c=>c.Id == id);
     }
 }

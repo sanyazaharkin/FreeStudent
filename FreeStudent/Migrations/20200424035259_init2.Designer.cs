@@ -3,14 +3,16 @@ using System;
 using FreeStudent.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FreeStudent.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200424035259_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,19 +41,8 @@ namespace FreeStudent.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("DateOfDownload")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DateOfMarkForDelete")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Format")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("FileType")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("ForumId")
                         .HasColumnType("char(36)");
@@ -59,18 +50,13 @@ namespace FreeStudent.Migrations
                     b.Property<Guid?>("ForumMessageId")
                         .HasColumnType("char(36)");
 
-                    b.Property<bool>("MarkedForDeletion")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<Guid>("UserProfileId")
                         .HasColumnType("char(36)");
 
                     b.Property<byte[]>("bytes")
-                        .IsRequired()
                         .HasColumnType("longblob");
 
                     b.HasKey("Id");

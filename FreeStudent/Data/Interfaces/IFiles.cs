@@ -12,7 +12,8 @@ namespace FreeStudent.Data.Interfaces
         public File GetFileById(string Id);
         public IEnumerable<File> GetFilesBuAuthor(string ProfileID);
         public IEnumerable<File> GetAllFiles();
-        public void Del(string Id);
+        public void Del(Guid Id);
+        public void Restore(Guid Id);
         public void Update(File file);
 
     }

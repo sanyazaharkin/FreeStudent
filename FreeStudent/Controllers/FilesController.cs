@@ -15,8 +15,8 @@ namespace FreeStudent.Controllers
 {
     public class FilesController : Controller
     {
-        public readonly IFiles _files;
-        public readonly IUserProfiles _userProfiles;
+        private readonly IFiles _files;
+        private readonly IUserProfiles _userProfiles;
         private readonly UserManager<User> _userManager;
         public FilesController(IFiles files, IUserProfiles userProfiles, UserManager<User> userManager)
         {
@@ -26,6 +26,8 @@ namespace FreeStudent.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.Profiles = _userProfiles;
+            ViewBag.Users = _userManager.Users;
             return View(_files.GetAllFiles());
         }
 
@@ -36,32 +38,46 @@ namespace FreeStudent.Controllers
         }
 
         [HttpPost]
+        
         public IActionResult AddNewFile(AddNewFileViewModel model)
         {
 
             if (ModelState.IsValid)
             {
-                
-                
-                if (HttpContext.Request.Form.Files.Count > 0 & HttpContext.Request.Form.Files[0] != null)
+               
+                // считываем переданный файл в массив байтов
+                using (var binaryReader = new System.IO.BinaryReader(model.File.OpenReadStream()))
                 {
-                    File file = new File { Name = HttpContext.Request.Form.Files[0].FileName };
-                    // считываем переданный файл в массив байтов
-                    using (var binaryReader = new System.IO.BinaryReader(HttpContext.Request.Form.Files[0].OpenReadStream()))
-                    {
-                        file.bytes = binaryReader.ReadBytes((int)HttpContext.Request.Form.Files[0].Length);
-                        file.UserProfileId = _userProfiles.GetUserProfileByUserId(_userManager.GetUserId(User)).Id;
-                        _files.Add(file);
-                    }
-                    // установка массива байтов
-
+                    _files.Add(new File(
+                        Guid.Parse(_userProfiles.GetUserProfileIdByUserId(_userManager.GetUserId(this.User))),
+                        binaryReader.ReadBytes((int)model.File.Length),
+                        System.IO.Path.GetFileName(model.File.FileName),
+                        System.IO.Path.GetExtension(model.File.FileName),
+                        model.File.ContentType
+                        ));                        
                 }
-
-
+                    
+                
                 return RedirectToAction("Index");
             }
             ViewBag.Message = "Error";
             return View("Message");
+        }
+        public IActionResult GetFiles(string id)
+        {
+            File file = _files.GetFileById(id);
+            FileContentResult result = new FileContentResult(file.bytes, file.ContentType)
+            {
+                FileDownloadName = file.Name
+            };
+
+            return result;
+        }
+        public IActionResult Del(string id)
+        {
+            _files.Del(Guid.Parse(id));
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,21 +1,42 @@
 ﻿@model IEnumerable<File>
 
-<h2>Список Файлов</h2>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Имя</th>
-        <th>Загрузил</th>
-    </tr>
-    @foreach (var file in Model)
-    {
-    
+    <div class="row">
+        <h2>Список Файлов</h2>
+        <a class="btn btn-outline-success" asp-action="AddNewFile">Добавить файл</a>
+    </div>
+<table class="table table-bordered">
+    <thead class="thead-dark">
         <tr>
-            <td>@file.Id</td>
-            <td>@file.Name</td>
-            <td>@file.UserProfile.Name</td>
+            <th scope="col">Id</th>
+            <th scope="col">Имя Файла</th>
+            <th scope="col">Расширение</th>
+            <th scope="col">ContentType</th>
+            <th scope="col">Помечен для удаления</th>
+            <th scope="col">Загрузил</th>
+            <th scope="col">Дата Загрузки</th>
+            <th scope="col">Дата Удаления</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
-    }
+    </thead>    
+    <tbody>
+        @foreach (var file in Model)
+        {
+
+            <tr>
+                <td scope="row">@file.Id</td>
+                <td>@file.Name</td>
+                <td>@file.Format</td>
+                <td>@file.ContentType</td>
+                <td>@file.MarkedForDeletion</td>
+                <td>ViewBag.Profiles.GetUserProfileById(file.UserProfileId)</td>
+                <td>@file.DateOfDownload.ToLocalTime()</td>
+                <td>@file.DateOfMarkForDelete.ToLocalTime()</td>
+                <td><a class="btn btn-info" asp-controller="Files" asp-action="GetFiles" asp-route-id="@file.Id">Загрузить</a></td>
+                <td><a class="btn btn-outline-danger" asp-controller="Files" asp-action="Del" asp-route-id="@file.Id">Удалить</a></td>
+
+            </tr>
+        }
+    </tbody>
 </table>
 
-<a asp-action="AddNewFile">Добавить файл</a>

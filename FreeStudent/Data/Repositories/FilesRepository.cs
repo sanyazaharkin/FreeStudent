@@ -21,9 +21,20 @@ namespace FreeStudent.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Del(string Id)
+        public void Del(Guid Id)
         {
-            throw new NotImplementedException();
+            File file = _context.Files.FirstOrDefault(c => c.Id == Id);
+            file.MarkedForDeletion = true;
+            file.DateOfMarkForDelete = DateTime.UtcNow;
+            _context.Files.Update(file);
+            _context.SaveChanges();
+        }   
+        public void Restore(Guid Id)
+        {
+            File file = _context.Files.FirstOrDefault(c => c.Id == Id);
+            file.MarkedForDeletion = false;
+            _context.Files.Update(file);
+            _context.SaveChanges();
         }
 
         public IEnumerable<File> GetAllFiles() => _context.Files;
